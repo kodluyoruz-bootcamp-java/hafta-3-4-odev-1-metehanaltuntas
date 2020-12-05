@@ -9,7 +9,7 @@ public class NewDelhiCity extends City {
     }
 
     @Override
-    public void showTime(City city) {
-        super.showTime(city);
+    public void showTime() {
+        super.showTime();
     }
 }

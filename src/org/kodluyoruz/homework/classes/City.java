@@ -7,26 +7,12 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-public abstract class City implements IClock, Comparable<City>, Runnable {
+public abstract class City implements IClock, Comparable<City> {
 
     private String code;
     private String name;
     private String gmt;
-    private static ExecutorService executorService;
-    private String timeString;
-
-    public static ExecutorService getExecutorService() {
-        if (executorService == null) {
-            executorService = Executors.newFixedThreadPool(5);
-        }
-        return executorService;
-    }
-
-    public City() {
-    }
 
     public City(CityInformationsEnum cityInformationsEnum) {
         this.code = cityInformationsEnum.getCode();
@@ -59,14 +45,9 @@ public abstract class City implements IClock, Comparable<City>, Runnable {
     }
 
     @Override
-    public void showTime(City city) {
-        getExecutorService().execute(city);
-    }
-
-    @Override
-    public void run() {
+    public void showTime() {
         boolean flag = true;
-        timeString = "";
+        String timeString = "";
         while (flag) {
             ThreadSleeper.sleep(1000);
             TimeZone.setDefault(TimeZone.getTimeZone(this.gmt));
